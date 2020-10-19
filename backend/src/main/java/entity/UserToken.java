@@ -6,9 +6,10 @@ public class UserToken {
 	private Long expires_in;
 	
 	public UserToken() {
-		super();
+		this.access_token = null;
+        this.expires_in = null;
 	}
-	public UserToken(String access_token, Long expires_in) {
+	public UserToken(String access_token, long expires_in) {
 		super();
 		this.access_token = access_token;
 		this.expires_in = expires_in;
