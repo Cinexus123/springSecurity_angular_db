@@ -86,4 +86,34 @@ public class User implements UserDetails, Serializable {
 			// TODO Auto-generated method stub
 			return false;
 		}
+
+		public String getFirstname() {
+			return firstname;
+		}
+
+		public void setFirstname(String firstname) {
+			this.firstname = firstname;
+		}
+
+		public String getLastname() {
+			return lastname;
+		}
+
+		public void setLastname(String lastname) {
+			this.lastname = lastname;
+		}
+
+		public void setUsername(String username) {
+			this.username = username;
+		}
+
+		public void setPassword(String password) {
+			this.password = password;
+		}
+
+		public void setAuthorities(List<Authority> authorities) {
+			this.authorities = authorities;
+		}
+		
+		
 }
