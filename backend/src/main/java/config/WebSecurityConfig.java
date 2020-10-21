@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import auth.AuthenticationSuccessHandler;
 import auth.LogoutSuccess;
 
 @Configuration
@@ -15,37 +16,37 @@ import auth.LogoutSuccess;
 public class WebSecurityConfig {
 
 	protected final Log LOGGER = LogFactory.getLog(getClass());
-	
+
 	private final CustomUserDetailsService jwtUserDetailsService;
 	private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 	private final LogoutSuccess logoutSuccess;
-    private final AuthenticationSuccessHandler authenticationSuccessHandler;
+	private final AuthenticationSuccessHandler authenticationSuccessHandler;
 	private final AuthenticationFailureHandler authenticationFailureHandler;
-	  
+
 	@Value("${jwt.cookie}")
 	private String TOKEN_COOKIE;
-	
+
 	public void changePassword(String oldPassword, String newPassword) throws Exception {
-		 Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
-		 String username = currentUser.getName();
+		Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
+		String username = currentUser.getName();
 
-		    if (authenticationManagerBean() != null) {
-		      LOGGER.debug("Re-authenticating user '" + username + "' for password change request.");
+		if (authenticationManagerBean() != null) {
+			LOGGER.debug("Re-authenticating user '" + username + "' for password change request.");
 
-		      authenticationManagerBean().authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
-		    } else {
-		      LOGGER.debug("No authentication manager set. can't change Password!");
+			authenticationManagerBean().authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
+		} else {
+			LOGGER.debug("No authentication manager set. can't change Password!");
 
-		      return;
-		    }
+			return;
+		}
 
-		    LOGGER.debug("Changing password for user '" + username + "'");
+		LOGGER.debug("Changing password for user '" + username + "'");
 
-		    User user = jwtUserDetailsService.loadUserByUsername(username);
+		User user = jwtUserDetailsService.loadUserByUsername(username);
 
-		    user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
-		    jwtUserDetailsService.save(user);
-		
+		user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+		jwtUserDetailsService.save(user);
+
 	}
 
 }
