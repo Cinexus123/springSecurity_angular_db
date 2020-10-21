@@ -36,7 +36,7 @@ public class TokenHelper {
 	private String AUTH_COOKIE;
 	
 	
-	private String getUsernameFromToken(String token) {
+	public String getUsernameFromToken(String token) {
 		 String username;
 	        try {
 	            final Claims claims = this.getClaimsFromToken(token);

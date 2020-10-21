@@ -4,9 +4,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,12 +18,13 @@ import auth.AuthenticationFailureHandler;
 import auth.AuthenticationSuccessHandler;
 import auth.LogoutSuccess;
 import auth.RestAuthenticationEntryPoint;
+import auth.TokenAuthenticationFilter;
 import entity.User;
 import serviceImpl.CustomUserDetailsService;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	protected final Log LOGGER = LogFactory.getLog(getClass());
 
@@ -67,6 +71,17 @@ public class WebSecurityConfig {
 		user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
 		jwtUserDetailsService.save(user);
 
+	}
+
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
+
+	@Bean
+	public TokenAuthenticationFilter jwtAuthenticationTokenFilter() throws Exception {
+		return new TokenAuthenticationFilter();
 	}
 
 }
