@@ -2,14 +2,18 @@ package config;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import auth.AuthenticationFailureHandler;
 import auth.AuthenticationSuccessHandler;
 import auth.LogoutSuccess;
+import auth.RestAuthenticationEntryPoint;
+import serviceImpl.CustomUserDetailsService;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -22,6 +26,19 @@ public class WebSecurityConfig {
 	private final LogoutSuccess logoutSuccess;
 	private final AuthenticationSuccessHandler authenticationSuccessHandler;
 	private final AuthenticationFailureHandler authenticationFailureHandler;
+
+	@Autowired
+	public WebSecurityConfig(CustomUserDetailsService jwtUserDetailsService,
+			RestAuthenticationEntryPoint restAuthenticationEntryPoint, LogoutSuccess logoutSuccess,
+			AuthenticationSuccessHandler authenticationSuccessHandler,
+			AuthenticationFailureHandler authenticationFailureHandler) {
+		super();
+		this.jwtUserDetailsService = jwtUserDetailsService;
+		this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
+		this.logoutSuccess = logoutSuccess;
+		this.authenticationSuccessHandler = authenticationSuccessHandler;
+		this.authenticationFailureHandler = authenticationFailureHandler;
+	}
 
 	@Value("${jwt.cookie}")
 	private String TOKEN_COOKIE;
