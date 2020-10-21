@@ -5,14 +5,17 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import auth.AuthenticationFailureHandler;
 import auth.AuthenticationSuccessHandler;
 import auth.LogoutSuccess;
 import auth.RestAuthenticationEntryPoint;
+import entity.User;
 import serviceImpl.CustomUserDetailsService;
 
 @Configuration
