@@ -132,4 +132,14 @@ public class TokenHelper {
 		return new Date(getCurrentTimeMillis() + this.EXPIRES_IN * 1000);
 	}
 
+	public String generateToken(String username) {
+		 return Jwts.builder()
+	                .setIssuer(APP_NAME)
+	                .setSubject(username)
+	                .setIssuedAt(generateCurrentDate())
+	                .setExpiration(generateExpirationDate())
+	                .signWith(SIGNATURE_ALGORITHM, SECRET)
+	                .compact();
+	}
+
 }
