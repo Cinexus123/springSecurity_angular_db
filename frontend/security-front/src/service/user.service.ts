@@ -7,6 +7,7 @@ import { ConfigService } from './config.service';
   providedIn: 'root'
 })
 export class UserService {
+  
 
   currentUser;
 
@@ -19,6 +20,10 @@ export class UserService {
   getMyInfo() {
     return this.apiService.get(this.config.whoamiUrl)
       .pipe(map(user => this.currentUser = user));
+  }
+
+  resetCredentials() {
+    return this.apiService.get(this.config.resetCredentialsUrl);
   }
  
 
