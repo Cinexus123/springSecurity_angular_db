@@ -5,6 +5,9 @@ import {map} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserService {
+  getMyInfo() {
+    throw new Error('Method not implemented.');
+  }
 
   currentUser;
 

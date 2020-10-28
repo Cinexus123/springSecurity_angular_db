@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { UserService } from 'src/service/user.service';
+import { AuthService } from 'src/service/auth.service';
 import { DisplayMessage } from 'src/shared/models/display-message';
 
 @Component({
@@ -13,7 +14,6 @@ import { DisplayMessage } from 'src/shared/models/display-message';
 export class LoginComponent  implements OnInit, OnDestroy {
 
   title = 'Login';
-  githubLink = 'https://github.com/bfwg/angular-spring-starter';
   form: FormGroup;
 
   submitted = false;
@@ -28,6 +28,7 @@ export class LoginComponent  implements OnInit, OnDestroy {
 
   constructor(
     private userService: UserService,
+    private authService: AuthService,
     private router: Router
   ) {
   
