@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { UserService } from 'src/service/user.service';
+import { DisplayMessage } from 'src/shared/models/display-message';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,9 @@ export class LoginComponent  implements OnInit, OnDestroy {
   form: FormGroup;
 
   submitted = false;
+
+  
+  notification: DisplayMessage;
 
 
 
@@ -41,7 +45,18 @@ export class LoginComponent  implements OnInit, OnDestroy {
     /**
      * Innocent until proven guilty
      */
-   
+    this.notification = undefined;
+    this.submitted = true;
+
+    this.authService.login(this.form.value)
+      .subscribe(data => {
+          this.userService.getMyInfo().subscribe();
+          this.router.navigate([this.returnUrl]);
+        },
+        error => {
+          this.submitted = false;
+          this.notification = {msgType: 'error', msgBody: 'Incorrect username or password.'};
+        });
   }
 
 }
