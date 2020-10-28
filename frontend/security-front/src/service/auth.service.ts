@@ -28,16 +28,26 @@ export class AuthService {
         }));
   }
 
-  signup() {
-  
+  signup(user) {
+    const signupHeaders = new HttpHeaders({
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      });
+      return this.apiService.post(this.config.signupUrl, JSON.stringify(user), signupHeaders)
+        .pipe(map(() => {
+          console.log('Sign up success');
+        }));
   }
 
   logout() {
- 
+    return this.apiService.post(this.config.logoutUrl, {})
+    .pipe(map(() => {
+      this.userService.currentUser = null;
+    }));
   }
 
-  changePassowrd() {
-    
+  changePassowrd(passwordChanger) {
+    return this.apiService.post(this.config.changePasswordUrl, passwordChanger);
   }
 
 }
