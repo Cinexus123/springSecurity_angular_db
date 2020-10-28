@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { UserService } from 'src/service/user.service';
 
 @Component({
   selector: 'app-login',
@@ -16,12 +18,16 @@ export class LoginComponent  implements OnInit, OnDestroy {
   submitted = false;
 
 
-  notification: DisplayMessage;
 
   returnUrl: string;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
-  constructor() { }
+  constructor(
+    private userService: UserService,
+    private router: Router
+  ) {
+  
+   }
 
   ngOnDestroy(): void {
      this.ngUnsubscribe.next();
@@ -35,19 +41,7 @@ export class LoginComponent  implements OnInit, OnDestroy {
     /**
      * Innocent until proven guilty
      */
-    this.notification = undefined;
-    this.submitted = true;
-
-    this.authService.login(this.form.value)
-      .subscribe(data => {
-          this.userService.getMyInfo().subscribe();
-          this.router.navigate([this.returnUrl]);
-        },
-        error => {
-          this.submitted = false;
-          this.notification = {msgType: 'error', msgBody: 'Incorrect username or password.'};
-        });
-
+   
   }
 
 }
