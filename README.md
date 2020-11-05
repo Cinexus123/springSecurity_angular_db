@@ -31,7 +31,7 @@ The login panel looks like this:
 
 ![](fotos/loginPanel.PNG)
 
-In the event of lack of rights, we will receive feedback:
+In the event of lack of rights, we will receive feedback(login as a user to admin panel):
 
 ![](fotos/permissionDenied.PNG)
 
